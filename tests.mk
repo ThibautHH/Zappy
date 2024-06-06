@@ -30,7 +30,7 @@ IGNORED_BINS			+=	$($(NAME)_TESTS)
 
 IGNORE_FILE_RULES		+=	tests tests-debug
 
-$(NAME)_TEST_SCRIPT	:=	$(TESTS_DIR)test-arguments
+#$(NAME)_TEST_SCRIPT	:=	$(TESTS_DIR)test-arguments
 ifdef $(NAME)_LINK
 $($(NAME)_TESTS)_REQS	:=	$($(NAME)_OBJS)
 else

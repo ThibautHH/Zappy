@@ -8,8 +8,14 @@
 # Ignore build artifacts
 obj/
 zappy_server
+zappy_server_tests
 zappy_ai
+zappy_ai_tests
 zappy_gui
+zappy_gui_tests
+
+# Ignore coding-style logs
+coding-style-reports.log
 
 # Ignore temporary files
 *tmp*
