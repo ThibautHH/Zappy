@@ -44,9 +44,6 @@ $(NAME)_MAIN_SRC		:=	$(SRC_DIR)main$(SRC_EXT)
 $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
 							))
 
-CODING_STYLE_LOG		:=	coding-style-reports.log
-CODING_STYLE_IMAGE		:=	ghcr.io/epitech/coding-style-checker:latest
-
 $(NAME)_MAIN_OBJ		:=													\
 	$($(NAME)_MAIN_SRC:$(SRC_DIR)%$(SRC_EXT)=$(OBJ_DIR)%$(OBJ_EXT))
 $(NAME)_OBJS			:=													\
@@ -68,13 +65,6 @@ AR						:=	ar
 ARFLAGS					:=	rcs
 CXX						:=	g++
 CC						:=	gcc
-DOCKER					:=	[ -r /var/run/docker.sock ] &&	\
-							[ -w /var/run/docker.sock ]
-DOCKER					:=	cmd="$$(which docker)"	\
-							&& if ! ($(DOCKER));	\
-							then cmd="sudo $${cmd}";\
-							fi; echo "$${cmd}"
-DOCKER					:=	$(shell $(DOCKER))
 HDR						=	$(findstring $(SRC_DIR)$*$(HDR_EXT),$^)
 PCH						=	$(HDR:$(SRC_DIR)%$(HDR_EXT)=$(OBJ_DIR)%$(PCH_EXT))
 PCHFLAGS				=	$(patsubst %,-iquote %,$(dir $(PCH)))			\
@@ -162,10 +152,6 @@ include ../ignore-file.mk ../tests.mk
 docs:
 	@-echo 'Generating documentation...'
 	@doxygen
-
-coding-style:			fclean
-	@-echo 'Checking coding style...'
-	@$(DOCKER) run --rm -v .:/mnt $(CODING_STYLE_IMAGE) /mnt /mnt
 
 clean:
 	@-echo 'Deleting build directory...'

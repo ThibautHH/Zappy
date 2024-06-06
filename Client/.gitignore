@@ -23,9 +23,6 @@ a.out
 *.gcno
 vgcore.*
 
-# Ignore coding-style logs
-coding-style-reports.log
-
 # Ignore temporary files
 *tmp*
 *~

@@ -44,9 +44,6 @@ $(IGNORED_BINS:=$(nl))
 *.gcno
 vgcore.*
 
-# Ignore coding-style logs
-$(CODING_STYLE_LOG)
-
 # Ignore temporary files
 *tmp*
 *~
