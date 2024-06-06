@@ -1,0 +1,35 @@
+##
+## EPITECH PROJECT, 2024
+## Zappy GUI
+## File description:
+## .gitignore
+##
+
+# Ignore object files
+../obj/Graphical/Main.o
+
+# Ignore precomiled headers
+
+# Ignore dependency files
+../obj/Graphical/Main.d
+
+# Ignore binary files
+a.out
+../zappy_gui
+../zappy_gui_tests
+
+# Ignore logs and reports
+*.gcda
+*.gcno
+vgcore.*
+
+# Ignore coding-style logs
+coding-style-reports.log
+
+# Ignore temporary files
+*tmp*
+*~
+\#*#
+.#*
+
+# Miscellanous

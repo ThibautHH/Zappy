@@ -1,0 +1,35 @@
+##
+## EPITECH PROJECT, 2024
+## Zappy client
+## File description:
+## .gitignore
+##
+
+# Ignore object files
+../obj/Client/Main.o
+
+# Ignore precomiled headers
+
+# Ignore dependency files
+../obj/Client/Main.d
+
+# Ignore binary files
+a.out
+../zappy_ai
+../zappy_ai_tests
+
+# Ignore logs and reports
+*.gcda
+*.gcno
+vgcore.*
+
+# Ignore coding-style logs
+coding-style-reports.log
+
+# Ignore temporary files
+*tmp*
+*~
+\#*#
+.#*
+
+# Miscellanous
