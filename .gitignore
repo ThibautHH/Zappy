@@ -5,6 +5,12 @@
 ## Global ignore file
 ##
 
+# Ignore build artifacts
+obj/
+zappy_server
+zappy_ai
+zappy_gui
+
 # Ignore temporary files
 *tmp*
 *~
