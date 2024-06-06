@@ -1,0 +1,35 @@
+##
+## EPITECH PROJECT, 2024
+## Zappy server
+## File description:
+## .gitignore
+##
+
+# Ignore object files
+../obj/Server/main.o
+
+# Ignore precomiled headers
+
+# Ignore dependency files
+../obj/Server/main.d
+
+# Ignore binary files
+a.out
+../zappy_server
+../zappy_server_tests
+
+# Ignore logs and reports
+*.gcda
+*.gcno
+vgcore.*
+
+# Ignore coding-style logs
+coding-style-reports.log
+
+# Ignore temporary files
+*tmp*
+*~
+\#*#
+.#*
+
+# Miscellanous
