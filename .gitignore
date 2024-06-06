@@ -1,0 +1,12 @@
+##
+## EPITECH PROJECT, 2024
+## Zappy
+## File description:
+## Global ignore file
+##
+
+# Ignore temporary files
+*tmp*
+*~
+\#*#
+.#*
