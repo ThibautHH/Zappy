@@ -5,7 +5,14 @@
 ** Program entrypoint
 */
 
-int main(const int, const char * const * const)
-{
+#include <SFML/Graphics.hpp>
+#include "../include/Game.hpp"
+
+int main() {
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Zappy GUI");
+    Game game(window);
+
+    game.run();
+
     return 0;
 }

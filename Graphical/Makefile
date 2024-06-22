@@ -42,6 +42,7 @@ $(NAME)_DISPLAY			:=	Zappy GUI
 
 $(NAME)_MAIN_SRC		:=	$(SRC_DIR)Main$(SRC_EXT)
 $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
+								Game GameState Network Protocol Renderer	\
 							))
 
 $(NAME)_MAIN_OBJ		:=													\
@@ -56,7 +57,7 @@ $(NAME)_CHDS			:=	$(wildcard $($(NAME)_SRCS:$(SRC_EXT)=$(HDR_EXT)))
 $(NAME)_CHDS			:=													\
 	$($(NAME)_CHDS:$(SRC_DIR)%$(HDR_EXT)=$(OBJ_DIR)%$(CHD_EXT))
 
-LIBS					:=
+LIBS					:=	sfml-graphics sfml-window sfml-system
 ifndef $(NAME)_LINK
 LIB_DIRS				+=	$(dir $($(NAME)_TARGET))
 endif

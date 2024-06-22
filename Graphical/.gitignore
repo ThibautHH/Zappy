@@ -7,11 +7,26 @@
 
 # Ignore object files
 ../obj/Graphical/Main.o
+../obj/Graphical/Game.o
+../obj/Graphical/GameState.o
+../obj/Graphical/Network.o
+../obj/Graphical/Protocol.o
+../obj/Graphical/Renderer.o
 
 # Ignore precomiled headers
+../obj/Graphical/Game.hpp.gch
+../obj/Graphical/GameState.hpp.gch
+../obj/Graphical/Network.hpp.gch
+../obj/Graphical/Protocol.hpp.gch
+../obj/Graphical/Renderer.hpp.gch
 
 # Ignore dependency files
 ../obj/Graphical/Main.d
+../obj/Graphical/Game.d
+../obj/Graphical/GameState.d
+../obj/Graphical/Network.d
+../obj/Graphical/Protocol.d
+../obj/Graphical/Renderer.d
 
 # Ignore binary files
 a.out
