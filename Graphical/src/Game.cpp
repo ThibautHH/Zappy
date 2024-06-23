@@ -30,7 +30,7 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    std::string message = "";
+    std::string message = "msz 5 5";
     if (!message.empty()) {
         Protocol::parseServerMessage(gameState, message);
         renderer.updateGameState(gameState);

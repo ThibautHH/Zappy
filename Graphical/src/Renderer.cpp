@@ -43,12 +43,15 @@ void Renderer::draw() {
 
     float windowWidth = mWindow.getSize().x;
     float windowHeight = mWindow.getSize().y;
-    float zoomX = windowWidth / (width * mBackgroundTexture.getSize().x);
-    float zoomY = windowHeight / (height * mBackgroundTexture.getSize().y);
+    float mapWidth = width * mBackgroundTexture.getSize().x;
+    float mapHeight = height * mBackgroundTexture.getSize().y;
+    float zoomX = windowWidth / mapWidth;
+    float zoomY = windowHeight / mapHeight;
     float zoomLevel = std::min(zoomX, zoomY);
 
     mView.setSize(windowWidth, windowHeight);
-    mView.zoom(zoomLevel);
+    mView.setCenter(mapWidth / 2, mapHeight / 2);
+    mView.zoom(1.0f / zoomLevel);
     mWindow.setView(mView);
 
     for (int y = 0; y < height; ++y) {
