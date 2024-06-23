@@ -42,7 +42,7 @@ namespace utils {
     constexpr decltype(auto) extract(ref_convertible_to<std::istream> auto &&is) { return extract<T>(fwd(is), fwd(is)); }
 
     template <typename T>
-    inline decltype(auto) extract(ref_convertible_to<std::istream> auto &&is, T &&defaultValue)
+    inline T extract(ref_convertible_to<std::istream> auto &&is, T &&defaultValue)
     {
         T value{};
         fwd(is) >> value;
