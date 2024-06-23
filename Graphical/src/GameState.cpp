@@ -1,59 +1,32 @@
 /*
-** EPITECH PROJECT, 2023
-** Zappy
+** EPITECH PROJECT, 2024
+** Zappy GUI
 ** File description:
-** GameState.cpp
+** Zappy::GUI::GameState
 */
+
+#include "utils/enum_traits.hpp"
 
 #include "GameState.hpp"
 
-GameState::GameState()
-    : width(0), height(0), timeUnit(0), winningTeam(""), serverMsg("") {}
+using namespace Zappy::GUI;
 
-void GameState::setWidth(int w) {
-    this->width = w;
-    initializeTiles();
-}
+using OrientationTraits = utils::enum_traits<Orientation>;
 
-void GameState::setHeight(int h) {
-    this->height = h;
-    initializeTiles();
-}
+template<>
+OrientationTraits::from_string_type OrientationTraits::from_string = {
+    {"North", Orientation::NORTH},
+    {"East", Orientation::EAST},
+    {"South", Orientation::SOUTH},
+    {"West", Orientation::WEST}
+};
 
-void GameState::initializeTiles() {
-    if (width > 0 && height > 0) {
-        tiles.resize(height, std::vector<std::vector<int>>(width));
-    }
-}
+static const Orientation valid_values[] = {
+    Orientation::NORTH, Orientation::EAST, Orientation::SOUTH, Orientation::WEST
+};
 
-
-void GameState::parseServerMessage(const std::string& message) {
-
-}
-
-void GameState::parseTile(const std::string& message) {
-
-}
-
-void GameState::parsePlayer(const std::string& message) {
-
-}
-
-void GameState::parseEgg(const std::string& message) {
-
-}
-
-void GameState::parseMapSize(const std::string& message) {
-
-}
-
-void GameState::parsePlayerPosition(const std::string& message) {
-
-}
-
-void GameState::parseTeam(const std::string& message) {
-
-}
+template<>
+OrientationTraits::valid_values_type OrientationTraits::valid_values = ::valid_values;
 
 void GameState::updateTile(int x, int y, const std::vector<int>& resources) {
     if (y >= 0 && y < tiles.size() && x >= 0 && x < tiles[y].size()) {
@@ -105,15 +78,9 @@ void GameState::startIncantation(int x, int y, int level, const std::vector<int>
 }
 
 void GameState::endIncantation(int x, int y, const std::string& result) {
-
-}
-
-void GameState::playerLaysEgg(int id) {
-
 }
 
 void GameState::playerDropsResource(int id, int resourceType) {
-
 }
 
 void GameState::playerCollectsResource(int id, int resourceType) {
@@ -146,12 +113,4 @@ void GameState::endGame(const std::string& winningTeam) {
 
 void GameState::serverMessage(const std::string& message) {
     this->serverMsg = message;
-}
-
-void GameState::unknownCommand() {
-
-}
-
-void GameState::commandParameter() {
-
 }

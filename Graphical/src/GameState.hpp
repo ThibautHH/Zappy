@@ -1,84 +1,115 @@
 /*
-** EPITECH PROJECT, 2023
-** Zappy
+** EPITECH PROJECT, 2024
+** Zappy GUI
 ** File description:
-** GameState.hpp
+** Zappy::GUI::GameState
 */
 
-#ifndef GAMESTATE_HPP
-#define GAMESTATE_HPP
+#ifndef ZAPPY_GUI_GAMESTATE_HPP_
+    #define ZAPPY_GUI_GAMESTATE_HPP_
 
-#include <string>
-#include <vector>
-#include <map>
+    #include <cstdint>
+    #include <istream>
+    #include <string>
+    #include <vector>
+    #include <unordered_map>
 
-struct Player {
-    int x, y, orientation, level;
-    std::string team;
-    std::vector<int> inventory;
-};
+namespace Zappy::GUI {
+    enum class Orientation {
+        NORTH = 1,
+        EAST,
+        SOUTH,
+        WEST
+    };
 
-struct Egg {
-    int playerId, x, y;
-    bool hatched;
-};
+    struct Vector {
+        int x, y;
+    };
 
-class GameState {
-public:
-    GameState();
-    void setWidth(int w);
-    void setHeight(int h);
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
+    inline std::istream &operator>>(std::istream& is, Vector& vec)
+    {
+        return is >> vec.x >> vec.y;
+    }
 
-    void initializeTiles();
-    void updateTile(int x, int y, const std::vector<int>& resources);
-    const std::vector<int>& getTileResources(int x, int y) const;
-    void addTeam(const std::string& teamName);
-    void addPlayer(int id, int x, int y, int orientation, int level, const std::string& team);
-    void updatePlayerPosition(int id, int x, int y, int orientation);
-    void updatePlayerLevel(int id, int level);
-    void updatePlayerInventory(int id, const std::vector<int>& inventory);
-    void ejectPlayer(int id);
-    void broadcastMessage(int id, const std::string& message);
-    void startIncantation(int x, int y, int level, const std::vector<int>& players);
-    void endIncantation(int x, int y, const std::string& result);
-    void playerLaysEgg(int id);
-    void playerDropsResource(int id, int resourceType);
-    void playerCollectsResource(int id, int resourceType);
-    void playerDies(int id);
-    void addEgg(int eggId, int playerId, int x, int y);
-    void eggHatches(int eggId);
-    void eggDies(int eggId);
-    void setTimeUnit(int timeUnit);
-    void endGame(const std::string& winningTeam);
-    void serverMessage(const std::string& message);
-    void unknownCommand();
-    void commandParameter();
+    struct Inventory {
+        std::uint16_t food, linemate, deraumere, sibur, mendiane, phiras, thystame;
 
-    void parseServerMessage(const std::string& message);
-    void parseTile(const std::string& message);
-    void parsePlayer(const std::string& message);
-    void parseEgg(const std::string& message);
-    void parseMapSize(const std::string& message);
-    void parsePlayerPosition(const std::string& message);
-    void parseTeam(const std::string& message);
+        inline std::uint16_t &operator[](int index)
+        {
+            switch (index) {
+                case 0: return this->food;
+                case 1: return this->linemate;
+                case 2: return this->deraumere;
+                case 3: return this->sibur;
+                case 4: return this->mendiane;
+                case 5: return this->phiras;
+                case 6: return this->thystame;
+                default: throw std::out_of_range("Invalid resource index");
+            }
+        }
+    };
 
-    const std::vector<std::vector<std::vector<int>>>& getTiles() const { return tiles; }
-    const std::map<int, Player>& getPlayers() const { return players; }
-    const std::map<int, Egg>& getEggs() const { return eggs; }
+    inline std::istream &operator>>(std::istream& is, Inventory& inv)
+    {
+        return is >> inv.food >> inv.linemate >> inv.deraumere >> inv.sibur
+            >> inv.mendiane >> inv.phiras >> inv.thystame;
+    }
 
-private:
-    int width, height;
-    int timeUnit;
-    std::string winningTeam;
-    std::string serverMsg;
+    struct Player {
+        int x, y, orientation, level;
+        std::string team;
+        std::vector<int> inventory;
+    };
 
-    std::vector<std::string> teams;
-    std::map<int, Player> players;
-    std::map<int, Egg> eggs;
-    std::vector<std::vector<std::vector<int>>> tiles;
-};
+    struct Egg {
+        int playerId, x, y;
+        bool hatched;
+    };
 
-#endif
+    class GameState {
+        public:
+            void setWidth(int w) { this->width = w; }
+            void setHeight(int h) { this->height = h; }
+            int getWidth() const { return width; }
+            int getHeight() const { return height; }
 
+            void updateTile(int x, int y, const std::vector<int>& resources);
+            const std::vector<int>& getTileResources(int x, int y) const;
+            void addTeam(const std::string& teamName);
+            void addPlayer(int id, int x, int y, int orientation, int level, const std::string& team);
+            void updatePlayerPosition(int id, int x, int y, int orientation);
+            void updatePlayerLevel(int id, int level);
+            void updatePlayerInventory(int id, const std::vector<int>& inventory);
+            void ejectPlayer(int id);
+            void broadcastMessage(int id, const std::string& message);
+            void startIncantation(int x, int y, int level, const std::vector<int>& players);
+            void endIncantation(int x, int y, const std::string& result);
+            void playerLaysEgg(int id);
+            void playerDropsResource(int id, int resourceType);
+            void playerCollectsResource(int id, int resourceType);
+            void playerDies(int id);
+            void addEgg(int eggId, int playerId, int x, int y);
+            void eggHatches(int eggId);
+            void eggDies(int eggId);
+            void setTimeUnit(int timeUnit);
+            void endGame(const std::string& winningTeam);
+            void serverMessage(const std::string& message);
+
+            const std::vector<std::vector<std::vector<int>>>& getTiles() const { return tiles; }
+            const std::unordered_map<int, Player>& getPlayers() const { return players; }
+            const std::unordered_map<int, Egg>& getEggs() const { return eggs; }
+
+        private:
+            int width, height;
+            int timeUnit;
+            std::string winningTeam;
+            std::string serverMsg;
+
+            std::vector<std::string> teams;
+            std::unordered_map<int, Player> players;
+            std::unordered_map<int, Egg> eggs;
+            std::vector<std::vector<std::vector<int>>> tiles;
+    };
+}
+
+#endif /* !ZAPPY_GUI_GAMESTATE_HPP_ */

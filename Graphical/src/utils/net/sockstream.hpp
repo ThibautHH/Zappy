@@ -29,14 +29,20 @@ namespace utils::net {
 
         public:
             basic_sockstream(socket socket)
-                : std::basic_iostream<CharT, Traits>(&_buf), _buf(std::move(socket))
-            {
-            }
+                : std::basic_iostream<CharT, Traits>(std::addressof(_buf)), _buf(std::move(socket))
+            {}
+
+            constexpr basic_sockstream(basic_sockstream &&other) noexcept
+                : std::basic_iostream<CharT, Traits>(std::addressof(_buf)), _buf(std::move(other._buf))
+            {}
 
             constexpr native_handle_type native_handle() const noexcept { return _buf.socket().fd(); }
 
             constexpr bool block() const noexcept { return _buf.block(); }
             constexpr bool block(bool block) noexcept { return _buf.block(block); }
+
+            constexpr bool shutdown() const noexcept { return _buf.shutdown(); }
+            constexpr bool eof() const noexcept { return _buf.eof(); }
     };
 
     typedef basic_sockstream<char> sockstream;

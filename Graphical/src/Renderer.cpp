@@ -10,6 +10,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+using namespace Zappy::GUI;
+
 Renderer::Renderer(sf::RenderWindow& window)
     : mWindow(window) {
     if (!mBackgroundTexture.loadFromFile("assets/background2.png")) {
@@ -43,15 +45,12 @@ Renderer::Renderer(sf::RenderWindow& window)
 }
 
 
-void Renderer::updateGameState(const GameState& gameState) {
-    mGameState = gameState;
-}
-
-void Renderer::draw() {
+void Renderer::draw(const GameState& gameState)
+{
     mWindow.clear();
 
-    int width = mGameState.getWidth();
-    int height = mGameState.getHeight();
+    int width = gameState.getWidth();
+    int height = gameState.getHeight();
 
     float windowWidth = mWindow.getSize().x;
     float windowHeight = mWindow.getSize().y;
@@ -74,7 +73,7 @@ void Renderer::draw() {
             mBackgroundSprite.setPosition(x * mBackgroundTexture.getSize().x, y * mBackgroundTexture.getSize().y);
             mWindow.draw(mBackgroundSprite);
 
-            const auto& resources = mGameState.getTileResources(x, y);
+            const auto& resources = gameState.getTileResources(x, y);
             if (!resources.empty()) {
                 mResourceSprite.setPosition(x * mBackgroundTexture.getSize().x, y * mBackgroundTexture.getSize().y);
                 mWindow.draw(mResourceSprite);
@@ -86,14 +85,14 @@ void Renderer::draw() {
         }
     }
 
-    const auto& players = mGameState.getPlayers();
+    const auto& players = gameState.getPlayers();
     for (const auto& pair : players) {
         const auto& player = pair.second;
         mPlayerSprite.setPosition(player.x * mBackgroundTexture.getSize().x, player.y * mBackgroundTexture.getSize().y);
         mWindow.draw(mPlayerSprite);
     }
 
-    const auto& eggs = mGameState.getEggs();
+    const auto& eggs = gameState.getEggs();
     for (const auto& pair : eggs) {
         const auto& egg = pair.second;
         mEggSprite.setPosition(egg.x * mBackgroundTexture.getSize().x, egg.y * mBackgroundTexture.getSize().y);

@@ -29,9 +29,17 @@ namespace utils::net {
             socket(const socket &) = delete;
             constexpr socket(socket &&other) noexcept
                 : _domain(other._domain), _type(other._type), _protocol(other._protocol),
-                _fd(other._fd), _bound(other._bound), _connected(other._connected)
+                _fd(other._fd), _bound(other._bound), _connected(other._connected),
+                _shutdown(other._shutdown), _eof(other._eof)
             {
+                other._domain = domain::unspecified;
+                other._type = type::any;
+                other._protocol = protocol::free;
                 other._fd = -1;
+                other._bound = false;
+                other._connected = false;
+                other._shutdown = false;
+                other._eof = false;
             }
 
             constexpr ~socket()
@@ -41,12 +49,6 @@ namespace utils::net {
             }
 
             socket &operator=(const socket &) = delete;
-            constexpr socket &operator=(socket &&other) noexcept(noexcept(
-                std::construct_at(std::addressof(utils::declvar<socket>()), std::declval<socket>())))
-            {
-                this->~socket();
-                return *std::construct_at(this, std::move(other));
-            }
 
             constexpr domain domain() const noexcept { return this->_domain; }
             constexpr type type() const noexcept { return this->_type; }
@@ -55,6 +57,10 @@ namespace utils::net {
             constexpr int fd() const noexcept { return this->_fd; }
             constexpr bool bound() const noexcept { return this->_bound; }
             constexpr bool connected() const noexcept { return this->_connected; }
+            constexpr bool shutdown() const noexcept { return this->_shutdown; }
+            constexpr void shutdown(bool shutdown) noexcept { this->_shutdown = shutdown; }
+            constexpr bool eof() const noexcept { return this->_eof; }
+            constexpr void eof(bool eof) noexcept { this->_eof = eof; }
 
             void bind(sockaddress address);
             void bind(addressinfo info);
@@ -64,11 +70,12 @@ namespace utils::net {
             void connect(addressinfo info);
 
         private:
-            const enum domain _domain;
-            const enum type _type;
-            const enum protocol _protocol;
+            enum domain _domain;
+            enum type _type;
+            enum protocol _protocol;
             int _fd;
-            bool _bound, _connected;
+            bool _bound, _connected,
+                _shutdown, _eof;
     };
 }
 

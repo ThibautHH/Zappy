@@ -45,7 +45,8 @@ $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
 								Termination									\
 								$(addprefix utils/net/,						\
 									addressinfo socket)						\
-								Game GameState Network Protocol Renderer	\
+								Game GameState Renderer						\
+								NetworkClient Event							\
 							))
 
 $(NAME)_MAIN_OBJ		:=													\

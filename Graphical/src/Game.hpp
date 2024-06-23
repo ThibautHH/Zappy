@@ -1,21 +1,22 @@
 /*
-** EPITECH PROJECT, 2023
-** Zappy
+** EPITECH PROJECT, 2024
+** Zappy GUI
 ** File description:
-** Game.hpp
+** Zappy::GUI::Game
 */
 
-#ifndef GAME_HPP
-    #define GAME_HPP
+#ifndef ZAPPY_GUI_GAME_HPP_
+    #define ZAPPY_GUI_GAME_HPP_
 
     #include <SFML/Graphics.hpp>
+    #include "NetworkClient.hpp"
     #include "Renderer.hpp"
     #include "GameState.hpp"
-    #include "Network.hpp"
 
+namespace Zappy::GUI {
     class Game {
     public:
-        Game(sf::RenderWindow& window);
+        Game(NetworkClient client);
         void run();
 
     private:
@@ -23,10 +24,11 @@
         void update();
         void render();
 
-        sf::RenderWindow& window;
+        sf::RenderWindow window;
         Renderer renderer;
+        NetworkClient client;
         GameState gameState;
-        Network network;
     };
+}
 
-#endif
+#endif /* !ZAPPY_GUI_GAME_HPP_ */

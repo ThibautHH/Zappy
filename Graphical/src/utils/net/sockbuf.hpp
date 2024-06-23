@@ -30,8 +30,7 @@ namespace utils::net {
 
             char_type _ibuf[BUFSIZ], _obuf[BUFSIZ];
 
-            const class socket _socket;
-            bool _shutdown = false;
+            class socket _socket;
             bool _block = true;
 
             //std::locale _locale;
@@ -46,16 +45,24 @@ namespace utils::net {
                 this->setp(_obuf, _obuf + BUFSIZ + 1);
             }
 
+            constexpr basic_sockbuf(basic_sockbuf &&other) noexcept
+                : std::basic_streambuf<CharT, Traits>(other), _socket(std::move(other._socket)),
+                _block(other._block)
+            {}
+
             ~basic_sockbuf()
             {
-                this->sync();
+                if (this->socket().connected()
+                    && !this->socket().shutdown())
+                    this->overflow(Traits::eof());
             }
 
             constexpr const class socket &socket() const noexcept { return _socket; }
 
             constexpr bool block() const noexcept { return _block; }
             constexpr bool block(bool block) noexcept { bool old = _block; _block = block; return old; }
-            constexpr bool shutdown() const noexcept { return _shutdown; }
+            constexpr bool shutdown() const noexcept { return _socket.shutdown(); }
+            constexpr bool eof() const noexcept { return _socket.eof(); }
 
         protected:
             //virtual void imbue(const std::locale &loc) override
@@ -70,21 +77,22 @@ namespace utils::net {
 
             virtual std::streamsize showmanyc() override
             {
-                int count = recv(this->_socket.fd(), NULL, BUFSIZ, MSG_DONTWAIT | MSG_PEEK | MSG_TRUNC);
-    #pragma GCC diagnostic push
-    #pragma GCC diagnostic ignored "-Wlogical-op"
-                if (count == 0 || (count < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)))
-    #pragma GCC diagnostic pop
+                int res = recv(this->_socket.fd(), NULL, BUFSIZ, MSG_DONTWAIT | MSG_PEEK | MSG_TRUNC);
+                if (res == 0)
+                    this->_socket.eof(true);
+                if (res == 0 || (res < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)))
                     return -1;
-                if (count < 0)
+                if (res < 0)
                     throw std::system_error(errno, std::system_category(), "recv");
-                return count;
+                return res;
             }
 
             virtual int_type underflow() override
             {
                 int res = recv(this->_socket.fd(), this->eback(), BUFSIZ, this->_block ? 0 : MSG_DONTWAIT);
                 if (res == 0)
+                    this->_socket.eof(true);
+                if (res == 0 || (!this->_block && res < 0 && (errno == EAGAIN || errno == EWOULDBLOCK)))
                     return Traits::eof();
                 if (res < 0)
                     throw std::system_error(errno, std::system_category(), "recv");
@@ -94,12 +102,12 @@ namespace utils::net {
 
             virtual int_type overflow(int_type ch) override
             {
-                if (this->_shutdown)
+                if (this->_socket.shutdown())
                     return Traits::eof();
                 int res = send(this->_socket.fd(), this->pbase(), this->pptr() - this->pbase(), MSG_NOSIGNAL);
                 if (res < 0) {
                     if (errno == EPIPE) {
-                        this->_shutdown = true;
+                        this->_socket.shutdown(true);
                         return Traits::eof();
                     } else
                         throw std::system_error(errno, std::system_category(), "send");
