@@ -88,6 +88,30 @@ const Event::ParsersMap Event::Parsers = {
 };
 
 const Event::UpdatersMap Event::Updaters = {
+    { Event::Type::MAP_SIZE, [](const Event &event, GameState &gameState) { gameState.setSize(event._vector); } },
+    { Event::Type::TEAM_NAME, [](const Event &event, GameState &gameState) { gameState.addTeam(std::move(event._message)); } },
+    { Event::Type::TILE_CONTENT, [](const Event &event, GameState &gameState) { gameState.updateTile(event._vector, event._inventory); } },
+    { Event::Type::PLAYER_NEW, [](const Event &event, GameState &gameState) { gameState.addPlayer(event._id, event._vector, event._orientation, event._number, std::move(event._message)); } },
+    { Event::Type::PLAYER_POSITION, [](const Event &event, GameState &gameState) { gameState.updatePlayerPosition(event._id, event._vector, event._orientation); } },
+    { Event::Type::PLAYER_LEVEL, [](const Event &event, GameState &gameState) { gameState.updatePlayerLevel(event._id, event._number); } },
+    { Event::Type::PLAYER_INVENTORY, [](const Event &event, GameState &gameState) { gameState.updatePlayerInventory(event._id, event._inventory); } },
+    { Event::Type::PLAYER_EJECTED, [](const Event &event, GameState &gameState) { gameState.ejectPlayer(event._id); } },
+    { Event::Type::PLAYER_BROADCAST, [](const Event &event, GameState &gameState) { gameState.message(std::move(event._message), event._id); } },
+    { Event::Type::PLAYER_INCANTATION_START, [](const Event &event, GameState &gameState) { gameState.startIncantation(event._vector, event._number, {event._id}); } },
+    { Event::Type::PLAYER_INCANTATION_END, [](const Event &event, GameState &gameState) { gameState.endIncantation(event._vector, std::move(event._message)); } },
+    { Event::Type::PLAYER_DROP, [](const Event &event, GameState &gameState) { gameState.updatePlayerInventory(event._id, event._inventory); } },
+    { Event::Type::PLAYER_COLLECT, [](const Event &event, GameState &gameState) { gameState.updatePlayerInventory(event._id, event._inventory); } },
+    { Event::Type::PLAYER_DEATH, [](const Event &event, GameState &gameState) { gameState.playerDies(event._id); } },
+    { Event::Type::PLAYER_LAY, [](const Event &event, GameState &gameState) {} },
+    { Event::Type::EGG_LAID, [](const Event &event, GameState &gameState) { gameState.addEgg(event._id, event._number, event._vector); } },
+    { Event::Type::EGG_HATCH, [](const Event &event, GameState &gameState) { gameState.eggHatches(event._id); } },
+    { Event::Type::EGG_DIE, [](const Event &event, GameState &gameState) { gameState.eggDies(event._id); } },
+    { Event::Type::GAME_END, [](const Event &event, GameState &gameState) { gameState.endGame(std::move(event._message)); } },
+    { Event::Type::FREQUENCY_GET, [](const Event &event, GameState &gameState) { gameState.setTimeUnit(event._number); } },
+    { Event::Type::FREQUENCY_SET, [](const Event &, GameState &) {} },
+    { Event::Type::SERVER_MESSAGE, [](const Event &event, GameState &gameState) { gameState.message(std::move(event._message)); } },
+    { Event::Type::COMMAND_UNKNOWN, [](const Event &, GameState &) {} },
+    { Event::Type::COMMAND_INVALID, [](const Event &, GameState &) {} }
 };
 
 void Event::update(GameState &gameState) const

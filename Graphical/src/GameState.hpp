@@ -10,6 +10,7 @@
 
     #include <cstdint>
     #include <istream>
+    #include <list>
     #include <string>
     #include <vector>
     #include <unordered_map>
@@ -56,59 +57,58 @@ namespace Zappy::GUI {
     }
 
     struct Player {
-        int x, y, orientation, level;
         std::string team;
-        std::vector<int> inventory;
+        Vector position;
+        Inventory inventory;
+        Orientation orientation;
+        std::uint8_t level;
     };
 
     struct Egg {
-        int playerId, x, y;
-        bool hatched;
+        Vector position;
+        int playerId;
     };
 
     class GameState {
         public:
-            void setWidth(int w) { this->width = w; }
-            void setHeight(int h) { this->height = h; }
-            int getWidth() const { return width; }
-            int getHeight() const { return height; }
+            using Message = std::tuple<int, std::string>;
+            void setSize(Vector size) { this->_size = size; }
+            Vector getSize() const { return _size; }
 
-            void updateTile(int x, int y, const std::vector<int>& resources);
-            const std::vector<int>& getTileResources(int x, int y) const;
-            void addTeam(const std::string& teamName);
-            void addPlayer(int id, int x, int y, int orientation, int level, const std::string& team);
-            void updatePlayerPosition(int id, int x, int y, int orientation);
-            void updatePlayerLevel(int id, int level);
-            void updatePlayerInventory(int id, const std::vector<int>& inventory);
+            void updateTile(Vector pos, Inventory resources);
+            Inventory getTileResources(Vector pos) const;
+            void addTeam(std::string teamName);
+            void addPlayer(int id, Vector pos, Orientation orientation, int level, std::string team);
+            void updatePlayerPosition(int id, Vector pos, Orientation orientation);
+            void updatePlayerLevel(int id, std::uint8_t level);
+            void updatePlayerInventory(int id, Inventory inventory);
             void ejectPlayer(int id);
-            void broadcastMessage(int id, const std::string& message);
-            void startIncantation(int x, int y, int level, const std::vector<int>& players);
-            void endIncantation(int x, int y, const std::string& result);
-            void playerLaysEgg(int id);
+            void message(std::string message, int id = -1);
+            void startIncantation(Vector pos, int level, const std::vector<int>& players);
+            void endIncantation(Vector pos, std::string result);
             void playerDropsResource(int id, int resourceType);
             void playerCollectsResource(int id, int resourceType);
             void playerDies(int id);
-            void addEgg(int eggId, int playerId, int x, int y);
+            void addEgg(int eggId, int playerId, Vector pos);
             void eggHatches(int eggId);
             void eggDies(int eggId);
             void setTimeUnit(int timeUnit);
-            void endGame(const std::string& winningTeam);
-            void serverMessage(const std::string& message);
+            void endGame(std::string winningTeam);
 
-            const std::vector<std::vector<std::vector<int>>>& getTiles() const { return tiles; }
+            const std::vector<std::vector<Inventory>>& getTiles() const { return tiles; }
             const std::unordered_map<int, Player>& getPlayers() const { return players; }
             const std::unordered_map<int, Egg>& getEggs() const { return eggs; }
 
         private:
-            int width, height;
-            int timeUnit;
-            std::string winningTeam;
-            std::string serverMsg;
+            Vector _size;
+            int _timeUnit;
+            std::string _winningTeam;
 
             std::vector<std::string> teams;
+            std::vector<std::vector<Inventory>> tiles;
             std::unordered_map<int, Player> players;
             std::unordered_map<int, Egg> eggs;
-            std::vector<std::vector<std::vector<int>>> tiles;
+            std::list<Message> messages;
     };
 }
 

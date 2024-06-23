@@ -49,8 +49,7 @@ void Renderer::draw(const GameState& gameState)
 {
     mWindow.clear();
 
-    int width = gameState.getWidth();
-    int height = gameState.getHeight();
+    auto [width, height] = gameState.getSize();
 
     float windowWidth = mWindow.getSize().x;
     float windowHeight = mWindow.getSize().y;
@@ -88,14 +87,14 @@ void Renderer::draw(const GameState& gameState)
     const auto& players = gameState.getPlayers();
     for (const auto& pair : players) {
         const auto& player = pair.second;
-        mPlayerSprite.setPosition(player.x * mBackgroundTexture.getSize().x, player.y * mBackgroundTexture.getSize().y);
+        mPlayerSprite.setPosition(player.position.x * mBackgroundTexture.getSize().x, player.position.y * mBackgroundTexture.getSize().y);
         mWindow.draw(mPlayerSprite);
     }
 
     const auto& eggs = gameState.getEggs();
     for (const auto& pair : eggs) {
         const auto& egg = pair.second;
-        mEggSprite.setPosition(egg.x * mBackgroundTexture.getSize().x, egg.y * mBackgroundTexture.getSize().y);
+        mEggSprite.setPosition(egg.position.x * mBackgroundTexture.getSize().x, egg.position.y * mBackgroundTexture.getSize().y);
         mWindow.draw(mEggSprite);
     }
 
