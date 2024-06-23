@@ -152,6 +152,7 @@ $(OBJ_DIR)%$(OBJ_EXT):	$$(SRC_BASE)%$(SRC_EXT) $$(PCH)
 	@mkdir -p $(@D)
 	@$(COMPILER) -c $(FLAGS) $< -o $@
 
+$(NAME)_TEST_ARGS		:=	1234
 include ../ignore-file.mk ../tests.mk
 
 docs:

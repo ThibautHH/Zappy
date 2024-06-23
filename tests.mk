@@ -30,7 +30,7 @@ IGNORED_BINS			+=	$($(NAME)_TESTS)
 
 IGNORE_FILE_RULES		+=	tests tests-debug
 
-#$(NAME)_TEST_SCRIPT	:=	$(TESTS_DIR)test-arguments
+$(NAME)_TEST_SCRIPT		:=	$(TESTS_DIR)functional-tests
 ifdef $(NAME)_LINK
 $($(NAME)_TESTS)_REQS	:=	$($(NAME)_OBJS)
 else
@@ -55,7 +55,7 @@ tests:					$($(NAME)_TESTS)
 ifdef $(NAME)_TEST_SCRIPT
 tests:					$(NAME)
 	@-echo 'Running test script...'
-	@$($(NAME)_TEST_SCRIPT)
+	@$($(NAME)_TEST_SCRIPT) $($(NAME)_TEST_ARGS)
 endif
 	@-echo 'Running tests...'
 	@./$($(NAME)_TESTS) --verbose $(TESTFLAGS)
