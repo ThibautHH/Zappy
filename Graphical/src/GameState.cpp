@@ -127,5 +127,5 @@ void GameState::setTimeUnit(int timeUnit)
 
 void GameState::endGame(std::string winningTeam)
 {
-    this->_winningTeam = winningTeam;
+    this->winner = winningTeam;
 }

@@ -22,11 +22,13 @@ Game::~Game()
 
 void Game::run()
 {
-    while (window.isOpen()) {
+    while (window.isOpen() && !gameState.winner) {
         handleEvents();
         update();
         renderer.draw(gameState);
     }
+    if (gameState.winner)
+        std::cout << "Team " << *gameState.winner << " won!" << std::endl;
 }
 
 void Game::handleEvents()

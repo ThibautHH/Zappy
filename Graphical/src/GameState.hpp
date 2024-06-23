@@ -11,6 +11,7 @@
     #include <cstdint>
     #include <istream>
     #include <list>
+    #include <optional>
     #include <string>
     #include <vector>
     #include <unordered_map>
@@ -99,10 +100,11 @@ namespace Zappy::GUI {
             const std::unordered_map<int, Player>& getPlayers() const { return players; }
             const std::unordered_map<int, Egg>& getEggs() const { return eggs; }
 
+            std::optional<std::string> winner;
+
         private:
             Vector _size;
             int _timeUnit;
-            std::string _winningTeam;
 
             std::vector<std::string> teams;
             std::vector<std::vector<Inventory>> tiles;
