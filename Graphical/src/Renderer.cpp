@@ -5,8 +5,8 @@
 ** Renderer.cpp
 */
 
-#include "../include/Renderer.hpp"
-#include "../include/GameState.hpp"
+#include "Renderer.hpp"
+#include "GameState.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 

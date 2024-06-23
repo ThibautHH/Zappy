@@ -5,19 +5,18 @@
 ** GameState.cpp
 */
 
-#include <iostream>
-#include "../include/GameState.hpp"
+#include "GameState.hpp"
 
 GameState::GameState()
     : width(0), height(0), timeUnit(0), winningTeam(""), serverMsg("") {}
 
-void GameState::setWidth(int w) { 
-    this->width = w; 
+void GameState::setWidth(int w) {
+    this->width = w;
     initializeTiles();
 }
 
-void GameState::setHeight(int h) { 
-    this->height = h; 
+void GameState::setHeight(int h) {
+    this->height = h;
     initializeTiles();
 }
 

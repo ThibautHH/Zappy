@@ -5,8 +5,8 @@
 ** Game.cpp
 */
 
-#include "../include/Game.hpp"
-#include "../include/Protocol.hpp"
+#include "Game.hpp"
+#include "Protocol.hpp"
 #include <iostream>
 
 Game::Game(sf::RenderWindow& window)

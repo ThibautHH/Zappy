@@ -6,7 +6,7 @@
 */
 
 #include <SFML/Graphics.hpp>
-#include "../include/Game.hpp"
+#include "Game.hpp"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Zappy GUI");

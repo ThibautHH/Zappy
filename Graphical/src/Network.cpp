@@ -5,7 +5,7 @@
 ** Network.cpp
 */
 
-#include "../include/Network.hpp"
+#include "Network.hpp"
 #include <iostream>
 #include <sys/socket.h>
 #include <arpa/inet.h>

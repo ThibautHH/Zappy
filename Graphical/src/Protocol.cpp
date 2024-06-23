@@ -5,7 +5,7 @@
 ** Protocol.cpp
 */
 
-#include "../include/Protocol.hpp"
+#include "Protocol.hpp"
 #include <sstream>
 #include <iostream>
 

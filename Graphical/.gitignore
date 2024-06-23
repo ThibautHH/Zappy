@@ -27,6 +27,14 @@
 ../obj/Graphical/Network.d
 ../obj/Graphical/Protocol.d
 ../obj/Graphical/Renderer.d
+../obj/Graphical/Termination.hpp.d
+../obj/Graphical/utils/net/addressinfo.hpp.d
+../obj/Graphical/utils/net/socket.hpp.d
+../obj/Graphical/Game.hpp.d
+../obj/Graphical/GameState.hpp.d
+../obj/Graphical/Network.hpp.d
+../obj/Graphical/Protocol.hpp.d
+../obj/Graphical/Renderer.hpp.d
 
 # Ignore binary files
 a.out
