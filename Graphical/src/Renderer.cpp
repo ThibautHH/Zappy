@@ -1,22 +1,12 @@
-/*
-** EPITECH PROJECT, 2023
-** Zappy
-** File description:
-** Renderer.cpp
-*/
-
 #include <sstream>
-
 #include <SFML/Graphics.hpp>
-
 #include "GameState.hpp"
-
 #include "Renderer.hpp"
 
 using namespace Zappy::GUI;
 
 Renderer::Renderer(sf::RenderWindow& window)
-    : mWindow(window), mView(window.getDefaultView())
+    : mWindow(window), mView(window.getDefaultView()), mZoomLevel(1.0f)
 {
     if (!mBackgroundTexture.loadFromFile("assets/background2.png"))
         throw std::runtime_error("Can't load background texture.");
@@ -53,11 +43,11 @@ void Renderer::draw(const GameState& gameState)
     float mapHeight = height * mBackgroundTexture.getSize().y;
     float zoomX = windowWidth / mapWidth;
     float zoomY = windowHeight / mapHeight;
-    float zoomLevel = std::min(zoomX, zoomY);
+    mZoomLevel = std::min(zoomX, zoomY);
 
     mView.setSize(windowWidth, windowHeight);
     mView.setCenter(mapWidth / 2, mapHeight / 2);
-    mView.zoom(1.0f / zoomLevel);
+    mView.zoom(1.0f / mZoomLevel);
     mWindow.setView(mView);
 
     sf::Vector2i mousePosition = sf::Mouse::getPosition(mWindow);
@@ -66,7 +56,7 @@ void Renderer::draw(const GameState& gameState)
     Vector tilePos{};
     Inventory resources{};
 
-    for (int y = 0; y < height; ++y)
+    for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             mBackgroundSprite.setPosition(x * mBackgroundTexture.getSize().x, y * mBackgroundTexture.getSize().y);
             mWindow.draw(mBackgroundSprite);
@@ -80,6 +70,7 @@ void Renderer::draw(const GameState& gameState)
                 resources = displayedContents;
             }
         }
+    }
 
     drawResourceInfo(tilePos, resources);
 
@@ -116,6 +107,12 @@ void Renderer::drawResourceInfo(const Vector pos, const Inventory resources) {
     for (size_t i = 0; i < 7; ++i)
         resourceInfo << resourcesNames[i] << ": " << resources[i] << '\n';
     mResourceText.setString(resourceInfo.str());
-    mResourceText.setPosition(-40, 0);
+
+    float textSize = 12.0f / mZoomLevel;
+    mResourceText.setCharacterSize(static_cast<unsigned int>(textSize));
+    mResourceText.setPosition(10, 10);
+
+    mWindow.setView(mWindow.getDefaultView());
     mWindow.draw(mResourceText);
+    mWindow.setView(mView);
 }

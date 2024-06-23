@@ -32,6 +32,7 @@ namespace Zappy::GUI {
         sf::View mView;
         sf::Font mFont;
         sf::Text mResourceText;
+        float mZoomLevel;
 
         void generateBackground(int width, int height);
         void drawResourceInfo(const Vector pos, const Inventory resources);
