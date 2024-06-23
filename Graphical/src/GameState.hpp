@@ -28,6 +28,11 @@ namespace Zappy::GUI {
         int x, y;
     };
 
+    inline std::ostream &operator<<(std::ostream& os, const Vector vec)
+    {
+        return os << '(' << vec.x << ':' << vec.y << ')';
+    }
+
     inline std::istream &operator>>(std::istream& is, Vector& vec)
     {
         return is >> vec.x >> vec.y;
@@ -48,6 +53,11 @@ namespace Zappy::GUI {
                 case 6: return this->thystame;
                 default: throw std::out_of_range("Invalid resource index");
             }
+        }
+
+        inline std::uint16_t operator[](int index) const
+        {
+            return const_cast<Inventory *>(this)->operator[](index);
         }
     };
 

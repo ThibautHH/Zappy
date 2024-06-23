@@ -34,7 +34,7 @@ namespace Zappy::GUI {
         sf::Text mResourceText;
 
         void generateBackground(int width, int height);
-        void drawResourceInfo(int x, int y, const std::vector<int>& resources);
+        void drawResourceInfo(const Vector pos, const Inventory resources);
     };
 }
 

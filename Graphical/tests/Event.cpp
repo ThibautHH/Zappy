@@ -64,11 +64,6 @@ namespace Zappy::GUI {
             && lhs.thystame == rhs.thystame;
     }
 
-    inline std::ostream &operator<<(std::ostream& os, const Vector vec)
-    {
-        return os << '(' << vec.x << ':' << vec.y << ')';
-    }
-
     inline std::ostream &operator<<(std::ostream& os, const Inventory vec)
     {
         return os << "[food: " << vec.food << "; linemate: " << vec.linemate << "; deraumere: "
