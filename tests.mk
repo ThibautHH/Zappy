@@ -51,13 +51,13 @@ $($($(NAME)_TESTS)_OBJS):	GCCFLAGS := $(filter-out --coverage,$(GCCFLAGS))
 
 TESTFLAGS				+=	$(TEST_SUITES:%=--filter '%/*')
 
-tests:					$($(NAME)_TESTS)
 ifdef $(NAME)_TEST_SCRIPT
-tests:					$(NAME)
-	@-echo 'Running test script...'
+ftests:					$(NAME)
+	@-echo 'Running functional tests...'
 	@$($(NAME)_TEST_SCRIPT) $($(NAME)_TEST_ARGS)
 endif
-	@-echo 'Running tests...'
+tests:					$($(NAME)_TESTS)
+	@-echo 'Running unit tests...'
 	@./$($(NAME)_TESTS) --verbose $(TESTFLAGS)
 
 tests-debug:			GCCFLAGS += -g
