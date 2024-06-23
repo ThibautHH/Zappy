@@ -24,8 +24,17 @@ NetworkClient::NetworkClient(std::string host, std::string port)
     _sockstream.block(false);
 }
 
+void NetworkClient::getPlayer(int id)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+    _sockstream << "ppo #" << id
+        << "\nplv #" << id
+        << "\npin #" << id << std::endl;
+}
+
 bool NetworkClient::poll(Event &event)
 {
+    std::lock_guard<std::mutex> lock(_mutex);
     std::string line;
     std::getline(_sockstream, line);
     if (!_sockstream.eof())
