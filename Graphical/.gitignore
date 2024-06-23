@@ -7,6 +7,7 @@
 
 # Ignore object files
 ../obj/Graphical/Main.o
+../obj/Graphical/Termination.o
 ../obj/Graphical/Game.o
 ../obj/Graphical/GameState.o
 ../obj/Graphical/Network.o
@@ -14,6 +15,7 @@
 ../obj/Graphical/Renderer.o
 
 # Ignore precomiled headers
+../obj/Graphical/Termination.hpp.gch
 ../obj/Graphical/Game.hpp.gch
 ../obj/Graphical/GameState.hpp.gch
 ../obj/Graphical/Network.hpp.gch
@@ -22,6 +24,7 @@
 
 # Ignore dependency files
 ../obj/Graphical/Main.d
+../obj/Graphical/Termination.d
 ../obj/Graphical/Game.d
 ../obj/Graphical/GameState.d
 ../obj/Graphical/Network.d

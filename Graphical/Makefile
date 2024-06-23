@@ -42,6 +42,7 @@ $(NAME)_DISPLAY			:=	Zappy GUI
 
 $(NAME)_MAIN_SRC		:=	$(SRC_DIR)Main$(SRC_EXT)
 $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
+								Termination									\
 								Game GameState Network Protocol Renderer	\
 							))
 
