@@ -26,11 +26,12 @@ struct Egg {
 class GameState {
 public:
     GameState();
-    void setWidth(int w) { this->width = w; }
-    void setHeight(int h) { this->height = h; }
+    void setWidth(int w);
+    void setHeight(int h);
     int getWidth() const { return width; }
     int getHeight() const { return height; }
 
+    void initializeTiles();
     void updateTile(int x, int y, const std::vector<int>& resources);
     const std::vector<int>& getTileResources(int x, int y) const;
     void addTeam(const std::string& teamName);

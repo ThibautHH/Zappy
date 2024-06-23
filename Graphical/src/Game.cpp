@@ -30,12 +30,23 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
+    // test message
     std::string message = "msz 5 5";
     if (!message.empty()) {
         Protocol::parseServerMessage(gameState, message);
         renderer.updateGameState(gameState);
     }
+
+    // code to test if it work
+    int loop = 0;
+
+    if (loop == 0) {
+        gameState.updateTile(1, 1, {1, 2, 0, 0, 2, 0, 0});
+        loop = 1;
+    }
+    // end of test
 }
+
 
 void Game::render() {
     window.clear();

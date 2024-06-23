@@ -27,9 +27,21 @@ Renderer::Renderer(sf::RenderWindow& window)
     }
     mEggSprite.setTexture(mEggTexture);
 
-    mView = window.getDefaultView();
+    if (!mResourceTexture.loadFromFile("assets/resource.png")) {
+        std::cout << "Error: can't load resource texture." << std::endl;
+    }
+    mResourceSprite.setTexture(mResourceTexture);
 
+    if (!mFont.loadFromFile("assets/arial.ttf")) {
+        std::cout << "Error: can't load font." << std::endl;
+    }
+    mResourceText.setFont(mFont);
+    mResourceText.setCharacterSize(60);
+    mResourceText.setFillColor(sf::Color::Red);
+
+    mView = window.getDefaultView();
 }
+
 
 void Renderer::updateGameState(const GameState& gameState) {
     mGameState = gameState;
@@ -54,11 +66,23 @@ void Renderer::draw() {
     mView.zoom(1.0f / zoomLevel);
     mWindow.setView(mView);
 
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(mWindow);
+    sf::Vector2f worldPosition = mWindow.mapPixelToCoords(mousePosition);
+
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             mBackgroundSprite.setPosition(x * mBackgroundTexture.getSize().x, y * mBackgroundTexture.getSize().y);
             mWindow.draw(mBackgroundSprite);
 
+            const auto& resources = mGameState.getTileResources(x, y);
+            if (!resources.empty()) {
+                mResourceSprite.setPosition(x * mBackgroundTexture.getSize().x, y * mBackgroundTexture.getSize().y);
+                mWindow.draw(mResourceSprite);
+
+                if (mResourceSprite.getGlobalBounds().contains(worldPosition)) {
+                    drawResourceInfo(x, y, resources);
+                }
+            }
         }
     }
 
@@ -77,4 +101,14 @@ void Renderer::draw() {
     }
 
     mWindow.display();
+}
+
+void Renderer::drawResourceInfo(int x, int y, const std::vector<int>& resources) {
+    std::string resourceInfo = "Resources:\n";
+    for (size_t i = 0; i < resources.size(); ++i) {
+        resourceInfo += "Resource " + std::to_string(i) + ": " + std::to_string(resources[i]) + "\n";
+    }
+    mResourceText.setString(resourceInfo);
+    mResourceText.setPosition(-412, mBackgroundTexture.getSize().y - 50);
+    mWindow.draw(mResourceText);
 }

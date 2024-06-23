@@ -27,10 +27,15 @@
         sf::Sprite mPlayerSprite;
         sf::Texture mEggTexture;
         sf::Sprite mEggSprite;
+        sf::Texture mResourceTexture;
+        sf::Sprite mResourceSprite;
         sf::View mView;
-        std::vector<sf::Sprite> mResourceSprites;
+        sf::Font mFont;
+        sf::Text mResourceText;
 
         void generateBackground(int width, int height);
+        void drawResourceInfo(int x, int y, const std::vector<int>& resources);
     };
 
 #endif
+

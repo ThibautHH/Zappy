@@ -5,10 +5,27 @@
 ** GameState.cpp
 */
 
+#include <iostream>
 #include "../include/GameState.hpp"
 
 GameState::GameState()
     : width(0), height(0), timeUnit(0), winningTeam(""), serverMsg("") {}
+
+void GameState::setWidth(int w) { 
+    this->width = w; 
+    initializeTiles();
+}
+
+void GameState::setHeight(int h) { 
+    this->height = h; 
+    initializeTiles();
+}
+
+void GameState::initializeTiles() {
+    if (width > 0 && height > 0) {
+        tiles.resize(height, std::vector<std::vector<int>>(width));
+    }
+}
 
 
 void GameState::parseServerMessage(const std::string& message) {
@@ -40,14 +57,17 @@ void GameState::parseTeam(const std::string& message) {
 }
 
 void GameState::updateTile(int x, int y, const std::vector<int>& resources) {
-    if (tiles.size() <= y) tiles.resize(y + 1);
-    if (tiles[y].size() <= x) tiles[y].resize(x + 1);
-    
-    tiles[y][x] = resources;
+    if (y >= 0 && y < tiles.size() && x >= 0 && x < tiles[y].size()) {
+        tiles[y][x] = resources;
+    }
 }
 
 const std::vector<int>& GameState::getTileResources(int x, int y) const {
-
+    if (y >= 0 && y < tiles.size() && x >= 0 && x < tiles[y].size()) {
+        return tiles[y][x];
+    }
+    static const std::vector<int> empty; // Retourner un vecteur vide en cas d'indice invalide
+    return empty;
 }
 
 void GameState::addTeam(const std::string& teamName) {
