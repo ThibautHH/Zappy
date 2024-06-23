@@ -9,18 +9,18 @@
     #define RENDERER_HPP
 
     #include <SFML/Graphics.hpp>
+
     #include "GameState.hpp"
 
+namespace Zappy::GUI {
     class Renderer {
     public:
         Renderer(sf::RenderWindow& window);
 
-        void draw();
-        void updateGameState(const GameState& gameState);
+        void draw(const GameState& gameState);
 
     private:
         sf::RenderWindow& mWindow;
-        GameState mGameState;
         sf::Texture mBackgroundTexture;
         sf::Sprite mBackgroundSprite;
         sf::Texture mPlayerTexture;
@@ -34,8 +34,8 @@
         sf::Text mResourceText;
 
         void generateBackground(int width, int height);
-        void drawResourceInfo(int x, int y, const std::vector<int>& resources);
+        void drawResourceInfo(const Vector pos, const Inventory resources);
     };
+}
 
 #endif
-

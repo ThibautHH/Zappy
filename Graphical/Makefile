@@ -42,7 +42,11 @@ $(NAME)_DISPLAY			:=	Zappy GUI
 
 $(NAME)_MAIN_SRC		:=	$(SRC_DIR)Main$(SRC_EXT)
 $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
-								Game GameState Network Protocol Renderer	\
+								Termination									\
+								$(addprefix utils/net/,						\
+									addressinfo socket)						\
+								Game GameState Renderer						\
+								NetworkClient Event							\
 							))
 
 $(NAME)_MAIN_OBJ		:=													\
@@ -148,6 +152,7 @@ $(OBJ_DIR)%$(OBJ_EXT):	$$(SRC_BASE)%$(SRC_EXT) $$(PCH)
 	@mkdir -p $(@D)
 	@$(COMPILER) -c $(FLAGS) $< -o $@
 
+$(NAME)_TEST_ARGS		:=	1234
 include ../ignore-file.mk ../tests.mk
 
 docs:
