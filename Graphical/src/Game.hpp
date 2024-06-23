@@ -24,7 +24,6 @@ namespace Zappy::GUI {
     private:
         void handleEvents();
         void update();
-        void render();
         static void getPlayers(std::stop_token st, Game &game);
 
         sf::RenderWindow window;

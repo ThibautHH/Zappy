@@ -9,6 +9,7 @@
     #define RENDERER_HPP
 
     #include <SFML/Graphics.hpp>
+
     #include "GameState.hpp"
 
 namespace Zappy::GUI {
@@ -38,4 +39,3 @@ namespace Zappy::GUI {
 }
 
 #endif
-

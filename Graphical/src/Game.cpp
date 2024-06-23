@@ -25,7 +25,7 @@ void Game::run()
     while (window.isOpen()) {
         handleEvents();
         update();
-        render();
+        renderer.draw(gameState);
     }
 }
 
@@ -42,13 +42,6 @@ void Game::update()
     Event event;
     while (client.poll(event))
         event.update(gameState);
-}
-
-void Game::render()
-{
-    window.clear();
-    renderer.draw(gameState);
-    window.display();
 }
 
 void Game::getPlayers(std::stop_token st, Game &game)
