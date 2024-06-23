@@ -12,22 +12,22 @@
 
 Renderer::Renderer(sf::RenderWindow& window)
     : mWindow(window) {
-    if (!mBackgroundTexture.loadFromFile("assets/background.png")) {
+    if (!mBackgroundTexture.loadFromFile("assets/background2.png")) {
         std::cout << "Error: can't load background texture." << std::endl;
     }
     mBackgroundSprite.setTexture(mBackgroundTexture);
 
-    if (!mPlayerTexture.loadFromFile("assets/player.png")) {
+    if (!mPlayerTexture.loadFromFile("assets/player2.png")) {
         std::cout << "Error: can't load player texture." << std::endl;
     }
     mPlayerSprite.setTexture(mPlayerTexture);
 
-    if (!mEggTexture.loadFromFile("assets/egg.png")) {
+    if (!mEggTexture.loadFromFile("assets/egg2.png")) {
         std::cout << "Error: can't load egg texture." << std::endl;
     }
     mEggSprite.setTexture(mEggTexture);
 
-    if (!mResourceTexture.loadFromFile("assets/resource.png")) {
+    if (!mResourceTexture.loadFromFile("assets/resource2.png")) {
         std::cout << "Error: can't load resource texture." << std::endl;
     }
     mResourceSprite.setTexture(mResourceTexture);
@@ -36,7 +36,7 @@ Renderer::Renderer(sf::RenderWindow& window)
         std::cout << "Error: can't load font." << std::endl;
     }
     mResourceText.setFont(mFont);
-    mResourceText.setCharacterSize(60);
+    mResourceText.setCharacterSize(5);
     mResourceText.setFillColor(sf::Color::Red);
 
     mView = window.getDefaultView();
@@ -109,6 +109,6 @@ void Renderer::drawResourceInfo(int x, int y, const std::vector<int>& resources)
         resourceInfo += "Resource " + std::to_string(i) + ": " + std::to_string(resources[i]) + "\n";
     }
     mResourceText.setString(resourceInfo);
-    mResourceText.setPosition(-412, mBackgroundTexture.getSize().y - 50);
+    mResourceText.setPosition(-40, 0);
     mWindow.draw(mResourceText);
 }
