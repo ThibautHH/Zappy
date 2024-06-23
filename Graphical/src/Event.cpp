@@ -23,7 +23,7 @@ Event::Traits::from_string_type Event::Traits::from_string = {
     { "pbc", Event::Type::PLAYER_BROADCAST },
     { "pic", Event::Type::PLAYER_INCANTATION_START },
     { "pie", Event::Type::PLAYER_INCANTATION_END },
-    { "pgr", Event::Type::PLAYER_DROP },
+    { "pdr", Event::Type::PLAYER_DROP },
     { "pgt", Event::Type::PLAYER_COLLECT },
     { "pdi", Event::Type::PLAYER_DEATH },
     { "pfk", Event::Type::PLAYER_LAY },
@@ -69,7 +69,7 @@ const Event::ParsersMap Event::Parsers = {
     { Event::Type::PLAYER_LEVEL, [](std::istream &is, Event &event) { is >> Id{event.id} >> event.number; } },
     { Event::Type::PLAYER_INVENTORY, [](std::istream &is, Event &event) { is >> Id{event.id} >> event.inventory; } },
     { Event::Type::PLAYER_EJECTED, [](std::istream &is, Event &event) { is >> Id{event.id}; } },
-    { Event::Type::PLAYER_BROADCAST, [](std::istream &is, Event &event) { is >> Id{event.id} >> event.message; } },
+    { Event::Type::PLAYER_BROADCAST, [](std::istream &is, Event &event) { std::getline(is >> Id{event.id} >> std::ws, event.message); } },
     { Event::Type::PLAYER_INCANTATION_START, [](std::istream &is, Event &event) { is >> event.vector >> event.number >> Id{event.id}; } },
     { Event::Type::PLAYER_INCANTATION_END, [](std::istream &is, Event &event) { is >> event.vector >> event.message; } },
     { Event::Type::PLAYER_DROP, [](std::istream &is, Event &event) { is >> Id{event.id} >> event.number; } },
@@ -82,7 +82,7 @@ const Event::ParsersMap Event::Parsers = {
     { Event::Type::GAME_END, [](std::istream &is, Event &event) { is >> event.message; } },
     { Event::Type::FREQUENCY_GET, [](std::istream &is, Event &event) { is >> event.number; } },
     { Event::Type::FREQUENCY_SET, [](std::istream &is, Event &event) { is >> event.number; } },
-    { Event::Type::SERVER_MESSAGE, [](std::istream &is, Event &event) { is >> event.message; } },
+    { Event::Type::SERVER_MESSAGE, [](std::istream &is, Event &event) { std::getline(is >> std::ws, event.message); } },
     { Event::Type::COMMAND_UNKNOWN, [](std::istream &, Event &) {} },
     { Event::Type::COMMAND_INVALID, [](std::istream &, Event &) {} }
 };
