@@ -1,0 +1,13 @@
+#!/bin/bash
+
+tests/bin/zappy_server -p "$1" -x 10 -y 10 -n one two -c 2 -f 2 --auto-start on &
+
+ncat localhost "$1" < tests/files/basic-player-one &
+ncat localhost "$1" < tests/files/basic-player-two &
+ncat localhost "$1" < tests/files/basic-player-one &
+ncat localhost "$1" < tests/files/basic-player-two &
+
+cd ..
+./zappy_gui -p "$1" -h localhost
+
+pkill zappy_server

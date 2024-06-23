@@ -42,6 +42,11 @@ $(NAME)_DISPLAY			:=	Zappy GUI
 
 $(NAME)_MAIN_SRC		:=	$(SRC_DIR)Main$(SRC_EXT)
 $(NAME)_SRCS			:=	$(addsuffix $(SRC_EXT),$(addprefix $(SRC_DIR),	\
+								Termination									\
+								$(addprefix utils/net/,						\
+									addressinfo socket)						\
+								Game GameState Renderer						\
+								NetworkClient Event							\
 							))
 
 $(NAME)_MAIN_OBJ		:=													\
@@ -56,7 +61,7 @@ $(NAME)_CHDS			:=	$(wildcard $($(NAME)_SRCS:$(SRC_EXT)=$(HDR_EXT)))
 $(NAME)_CHDS			:=													\
 	$($(NAME)_CHDS:$(SRC_DIR)%$(HDR_EXT)=$(OBJ_DIR)%$(CHD_EXT))
 
-LIBS					:=
+LIBS					:=	sfml-graphics sfml-window sfml-system
 ifndef $(NAME)_LINK
 LIB_DIRS				+=	$(dir $($(NAME)_TARGET))
 endif
@@ -147,6 +152,7 @@ $(OBJ_DIR)%$(OBJ_EXT):	$$(SRC_BASE)%$(SRC_EXT) $$(PCH)
 	@mkdir -p $(@D)
 	@$(COMPILER) -c $(FLAGS) $< -o $@
 
+$(NAME)_TEST_ARGS		:=	1234
 include ../ignore-file.mk ../tests.mk
 
 docs:

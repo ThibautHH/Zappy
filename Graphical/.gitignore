@@ -7,11 +7,46 @@
 
 # Ignore object files
 ../obj/Graphical/Main.o
+../obj/Graphical/Termination.o
+../obj/Graphical/utils/net/addressinfo.o
+../obj/Graphical/utils/net/socket.o
+../obj/Graphical/Game.o
+../obj/Graphical/GameState.o
+../obj/Graphical/Renderer.o
+../obj/Graphical/NetworkClient.o
+../obj/Graphical/Event.o
+../obj/Graphical/tests/Event.o
 
 # Ignore precomiled headers
+../obj/Graphical/Termination.hpp.gch
+../obj/Graphical/utils/net/addressinfo.hpp.gch
+../obj/Graphical/utils/net/socket.hpp.gch
+../obj/Graphical/Game.hpp.gch
+../obj/Graphical/GameState.hpp.gch
+../obj/Graphical/Renderer.hpp.gch
+../obj/Graphical/NetworkClient.hpp.gch
+../obj/Graphical/Event.hpp.gch
+../obj/Graphical/tests/Event.hpp.gch
 
 # Ignore dependency files
 ../obj/Graphical/Main.d
+../obj/Graphical/Termination.d
+../obj/Graphical/utils/net/addressinfo.d
+../obj/Graphical/utils/net/socket.d
+../obj/Graphical/Game.d
+../obj/Graphical/GameState.d
+../obj/Graphical/Renderer.d
+../obj/Graphical/NetworkClient.d
+../obj/Graphical/Event.d
+../obj/Graphical/tests/Event.d
+../obj/Graphical/Termination.hpp.d
+../obj/Graphical/utils/net/addressinfo.hpp.d
+../obj/Graphical/utils/net/socket.hpp.d
+../obj/Graphical/Game.hpp.d
+../obj/Graphical/GameState.hpp.d
+../obj/Graphical/Renderer.hpp.d
+../obj/Graphical/NetworkClient.hpp.d
+../obj/Graphical/Event.hpp.d
 
 # Ignore binary files
 a.out
