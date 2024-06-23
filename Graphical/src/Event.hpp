@@ -50,16 +50,15 @@ namespace Zappy::GUI {
             static const ParsersMap Parsers;
             static const UpdatersMap Updaters;
 
-            Type type;
+            Type type{};
 
             void update(GameState &gameState) const;
 
-        private:
-            int _id, _number;
-            Vector _vector;
-            Orientation _orientation;
-            Inventory _inventory;
-            std::string _message;
+            int id, number;
+            Vector vector;
+            Orientation orientation;
+            Inventory inventory;
+            std::string message;
     };
 
     inline void operator>>(std::istream &is, Event &event)

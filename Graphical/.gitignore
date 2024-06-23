@@ -15,6 +15,7 @@
 ../obj/Graphical/Renderer.o
 ../obj/Graphical/NetworkClient.o
 ../obj/Graphical/Event.o
+../obj/Graphical/tests/Event.o
 
 # Ignore precomiled headers
 ../obj/Graphical/Termination.hpp.gch
@@ -25,6 +26,7 @@
 ../obj/Graphical/Renderer.hpp.gch
 ../obj/Graphical/NetworkClient.hpp.gch
 ../obj/Graphical/Event.hpp.gch
+../obj/Graphical/tests/Event.hpp.gch
 
 # Ignore dependency files
 ../obj/Graphical/Main.d
@@ -36,6 +38,7 @@
 ../obj/Graphical/Renderer.d
 ../obj/Graphical/NetworkClient.d
 ../obj/Graphical/Event.d
+../obj/Graphical/tests/Event.d
 ../obj/Graphical/Termination.hpp.d
 ../obj/Graphical/utils/net/addressinfo.hpp.d
 ../obj/Graphical/utils/net/socket.hpp.d
